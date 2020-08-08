@@ -12,15 +12,26 @@
 </head>
 
 <body>
+
   <div class="menu_box">
     <div class="menu_item" id="switch_video" onclick="switch_video()">
       hide
     </div>
+    <div class="menu_item" id="pause_video" onclick="pause_video()">
+      pause
+    </div>
   </div>
-  <video class="main_video" id="main_video"></video>
+
+  <video class="main_video" id="main_video">
+  </video>
 
   <div class="main_article">
+    <h1>引论</h1>
+    <ul>
+      <li onclick="load_video(1, 0, 33, 40)">编译器的作用</li>
+    </ul>
   </div>
+  
 </body>
 
 </html>
