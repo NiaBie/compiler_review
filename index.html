@@ -11,25 +11,62 @@
   <script src="/js/main.js"></script>
 </head>
 
-<body>
+<body onload="my_load()">
 
   <div class="menu_box">
+
     <div class="menu_item" id="switch_video" onclick="switch_video()">
       hide
     </div>
+
     <div class="menu_item" id="pause_video" onclick="pause_video()">
       pause
     </div>
+
+    <div class="bar_box">
+      <div class="progress_box" id="total_progress" onmousedown="change_progress()" onmousemove="change_progress()">
+        <div class="seek_box" id="cur_progress"></div>
+      </div>
+    </div>
+
+    <div class="bar_box">
+      <div class="progress_box" id="total_speed" onmousedown="change_speed()" onmousemove="change_speed()">
+        <div class="seek_box" id="cur_speed"></div>
+      </div>
+    </div>
+
   </div>
 
   <video class="main_video" id="main_video">
   </video>
 
   <div class="main_article">
-    <h1>引论</h1>
+    <h1>1 引论</h1>
     <ul>
       <li onclick="load_video(1, 0, 33, 40)">编译器的作用</li>
+      <li onclick="load_video(1, 0, 37, 04)">编译器的结构</li>
+      <li onclick="load_video(1, 0, 42, 22)">词法分析</li>
+      <li onclick="load_video(1, 0, 44, 47)">语法分析</li>
+      <li onclick="load_video(1, 0, 46, 18)">语义分析</li>
+      <li onclick="load_video(1, 0, 47, 39)">中间代码生成</li>
+      <li onclick="load_video(1, 0, 48, 51)">中间代码优化</li>
+      <li onclick="load_video(1, 0, 50, 3)">代码生成</li>
+      <li onclick="load_video(1, 0, 51, 11)">其他概念</li>
+      <li onclick="load_video(1, 0, 53, 23)">程序设计语言的发展历程</li>
+      <li onclick="load_video(1, 0, 54, 54)">语言和编译器之间的关系</li>
+      <li onclick="load_video(1, 0, 55, 34)">编译技术的应用</li>
+      <li onclick="load_video(1, 0, 56, 10)">程序设计语言的基础概念</li>
     </ul>
+    <h1>3 词法分析</h1>
+    <ul>
+      <li onclick="load_video(2, 0, 2, 31)">词法分析器的作用</li>
+    </ul>
+    <h1>4 语法分析</h1>
+    <h1>5 语法制导的翻译</h1>
+    <h1>6 中间代码生成</h1>
+    <h1>7 运行时刻环境</h1>
+    <h1>8 代码生成</h1>
+    <h1>9 机器无关的优化</h1>
   </div>
   
 </body>
