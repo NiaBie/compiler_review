@@ -4,6 +4,7 @@ var progress_bar;
 var speed_bar;
 var total_progress;
 var total_speed;
+var main_video;
 
 function my_load() {
   document.ondragstart = function() {
@@ -15,7 +16,7 @@ function my_load() {
   total_speed = document.getElementById("total_speed");
   progress_bar = total_progress.parentElement;
   speed_bar = total_speed.parentElement;
-
+  
   progress_bar.addEventListener("mousedown", function() {
     on_progress = 1;
     change_progress();
@@ -31,11 +32,20 @@ function my_load() {
   document.addEventListener("mouseup", function() {
     on_progress = 0;
     on_speed = 0;
-  })
+  });
+
+  main_video = document.getElementById("main_video");
+  main_video.addEventListener("timeupdate", function() {
+    var percent = main_video.currentTime / main_video.duration;
+    var total_x = parseFloat($("#total_speed").css("width"));
+    $("#cur_progress").css("width", (total_x * percent) + "px");
+  });
+  main_video.addEventListener("click", function() {
+    document.getElementById("pause_video").click();
+  });
 }
 
 function load_video(video_name, hour, minute, second) {
-  var main_video = document.getElementById("main_video");
   main_video.src = "/source/" + video_name + ".mp4";
   var currentTime =  hour * 3600 + minute * 60 + second;
   main_video.addEventListener("loadedmetadata", function() {
@@ -50,7 +60,6 @@ function load_video(video_name, hour, minute, second) {
 
 function switch_video() {
   var switch_button = document.getElementById("switch_video");
-  var main_video = document.getElementById("main_video");
   if (switch_button.children[0].innerText == "show") {
     $(main_video).css("display", "block");
     switch_button.children[0].innerText = "hide";
@@ -62,7 +71,6 @@ function switch_video() {
 
 function pause_video() {
   var pause_button = document.getElementById("pause_video");
-  var main_video = document.getElementById("main_video");
   if (pause_button.children[0].innerText == "pause") {
     main_video.pause();
     pause_button.children[0].innerText = "play";
@@ -75,7 +83,6 @@ function pause_video() {
 function change_progress() {
   if (!on_progress) return;
   var event = window.event;
-  var main_video = document.getElementById("main_video");
   
   var mouse_x = event.clientX + document.body.scrollLeft;
   var total_x = parseFloat($("#total_progress").css("width"));
@@ -92,7 +99,6 @@ function change_progress() {
 
 function change_speed() {
   if (!on_speed) return;
-  var main_video = document.getElementById("main_video");
   var event = window.event;
   
   var mouse_x = event.clientX + document.body.scrollLeft;
@@ -101,7 +107,7 @@ function change_speed() {
   var percent = (mouse_x - start_x) / total_x;
   percent = Math.min(1, percent);
   percent = Math.max(percent, 0);
-  main_video.playbackRate = 15 * percent + 1;
+  main_video.playbackRate = 2 * percent + 1;
   console.log(main_video.playbackRate);
   $("#cur_speed").css("width", (total_x * percent) + "px");
 }

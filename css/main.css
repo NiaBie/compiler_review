@@ -4,6 +4,7 @@
   background-color: black;
   margin-left: calc(50% - 480px);
   margin-right: calc(50% - 480px);
+  box-shadow: 0px 1px 4px black;
 
   top: 50px;
   position: fixed;
@@ -17,6 +18,7 @@
   background-color: grey;
   box-shadow: 0px 1px 3px black;
 
+  left: 0px;
   top: 0px;
   display: block;
   position: fixed;
