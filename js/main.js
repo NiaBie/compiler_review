@@ -1,19 +1,37 @@
-var host = "localhost:6061"
-var mouse_down = 0;
+var on_progress = 0;
+var on_speed = 0;
+var progress_bar;
+var speed_bar;
+var total_progress;
+var total_speed;
 
 function my_load() {
-  document.body.addEventListener("mousedown", function() {
-    mouse_down = 1;
-    console.log(mouse_down);
+  document.ondragstart = function() {
+    // 防止onmouseup判断失败
+    return false;
+  }
+
+  total_progress = document.getElementById("total_progress");
+  total_speed = document.getElementById("total_speed");
+  progress_bar = total_progress.parentElement;
+  speed_bar = total_speed.parentElement;
+
+  progress_bar.addEventListener("mousedown", function() {
+    on_progress = 1;
+    change_progress();
   });
-  document.body.addEventListener("mouseup", function() {
-    mouse_down = 0;
-    console.log(mouse_down);
+  speed_bar.addEventListener("mousedown", function() {
+    on_speed = 1;
+    change_speed();
   });
-  document.body.addEventListener("mouseout", function() {
-    mouse_down = 0;
-    console.log(mouse_down);
+  document.addEventListener("mousemove", function() {
+    change_progress();
+    change_speed();
   });
+  document.addEventListener("mouseup", function() {
+    on_progress = 0;
+    on_speed = 0;
+  })
 }
 
 function load_video(video_name, hour, minute, second) {
@@ -33,29 +51,29 @@ function load_video(video_name, hour, minute, second) {
 function switch_video() {
   var switch_button = document.getElementById("switch_video");
   var main_video = document.getElementById("main_video");
-  if (switch_button.innerText == "show") {
+  if (switch_button.children[0].innerText == "show") {
     $(main_video).css("display", "block");
-    switch_button.innerText = "hide";
+    switch_button.children[0].innerText = "hide";
   } else {
     $(main_video).css("display", "none");
-    switch_button.innerText = "show";
+    switch_button.children[0].innerText = "show";
   }
 }
 
 function pause_video() {
   var pause_button = document.getElementById("pause_video");
   var main_video = document.getElementById("main_video");
-  if (pause_button.innerText == "pause") {
+  if (pause_button.children[0].innerText == "pause") {
     main_video.pause();
-    pause_button.innerText = "play";
+    pause_button.children[0].innerText = "play";
   } else {
     main_video.play();
-    pause_button.innerText = "pause";
+    pause_button.children[0].innerText = "pause";
   }
 }
 
 function change_progress() {
-  if (!mouse_down) return;
+  if (!on_progress) return;
   var event = window.event;
   var main_video = document.getElementById("main_video");
   
@@ -63,6 +81,8 @@ function change_progress() {
   var total_x = parseFloat($("#total_progress").css("width"));
   var start_x = $("#total_progress").offset().left;
   var percent = (mouse_x - start_x) / total_x;
+  percent = Math.min(1, percent);
+  percent = Math.max(percent, 0);
   if (isNaN(main_video.duration) == false) {
     // console.log(mouse_x, total_x, start_x, percent);
     main_video.currentTime = main_video.duration * percent;
@@ -71,7 +91,7 @@ function change_progress() {
 }
 
 function change_speed() {
-  if (!mouse_down) return;
+  if (!on_speed) return;
   var main_video = document.getElementById("main_video");
   var event = window.event;
   
@@ -79,6 +99,8 @@ function change_speed() {
   var total_x = parseFloat($("#total_speed").css("width"));
   var start_x = $("#total_speed").offset().left;
   var percent = (mouse_x - start_x) / total_x;
+  percent = Math.min(1, percent);
+  percent = Math.max(percent, 0);
   main_video.playbackRate = 15 * percent + 1;
   console.log(main_video.playbackRate);
   $("#cur_speed").css("width", (total_x * percent) + "px");

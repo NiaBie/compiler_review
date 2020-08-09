@@ -16,21 +16,25 @@
   <div class="menu_box">
 
     <div class="menu_item" id="switch_video" onclick="switch_video()">
-      hide
+      <span>
+        hide
+      </span>
     </div>
 
     <div class="menu_item" id="pause_video" onclick="pause_video()">
-      pause
+      <span>
+        pause
+      </span>
     </div>
 
     <div class="bar_box">
-      <div class="progress_box" id="total_progress" onmousedown="change_progress()" onmousemove="change_progress()">
+      <div class="progress_box" id="total_progress">
         <div class="seek_box" id="cur_progress"></div>
       </div>
     </div>
 
     <div class="bar_box">
-      <div class="progress_box" id="total_speed" onmousedown="change_speed()" onmousemove="change_speed()">
+      <div class="progress_box" id="total_speed">
         <div class="seek_box" id="cur_speed"></div>
       </div>
     </div>

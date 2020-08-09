@@ -1,14 +1,3 @@
-html,
-body {
-  margin: 0px;
-  padding: 0px;
-  height: 100%;
-  min-height: 1280px;
-  width: 100%;
-  top: 0px;
-  position: absolute;
-}
-
 .main_video {
   height: 540px;
   width: 960px;
@@ -48,13 +37,22 @@ body {
 }
 
 .menu_item {
-  padding-top: 15px;
-  height: 35px;
+  height: 50px;
   width: 100px;
-  text-align: center;
   color: white;
   cursor: pointer;
   display: inline-block;
+  position: relative;
+}
+
+.menu_item span {
+  top: 15px;
+  width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: block;
+  position: absolute;
 }
 
 .menu_item:hover {
@@ -62,24 +60,32 @@ body {
 }
 
 .bar_box {
-  padding-top: 15px;
-  height: 35px;
   width: 300px;
+  height: 50px;
+  top: 0px;
   display: inline-block;
 }
 
+.progress_box,
+.seek_box {
+  height: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  position: absolute;
+}
+
 .progress_box {
-  height: 10px;
+  top: 23px;
   width: 280px;
   margin-left: 10px;
   margin-right: 10px;
   background-color: black;
-  display: inline-block;
 }
 
 .seek_box {
-  margin-right: 0px;
-  height: 10px;
+  top: 0px;
   width: 0px;
+  margin: 0px;
   background-color: white;
 }
