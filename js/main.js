@@ -5,18 +5,32 @@ var speed_bar;
 var total_progress;
 var total_speed;
 var main_video;
+var pause_button;// 暂停键
+var switch_button;// 速度调节键
 
 function my_load() {
-  document.ondragstart = function() {
-    // 防止onmouseup判断失败
-    return false;
-  }
-
   total_progress = document.getElementById("total_progress");
   total_speed = document.getElementById("total_speed");
   progress_bar = total_progress.parentElement;
   speed_bar = total_speed.parentElement;
-  
+  switch_button = document.getElementById("switch_video");
+  pause_button = document.getElementById("pause_video");
+
+  document.ondragstart = function() {
+    // 防止onmouseup判断失败
+    return false;
+  }
+  document.onkeydown = function() {
+    var key_code = window.event.keyCode;
+    if (key_code == 39) {
+      // right
+      main_video.currentTime += 5;
+    } else if (key_code == 37) {
+      // left
+      main_video.currentTime -= 5;
+    }
+  }
+
   progress_bar.addEventListener("mousedown", function() {
     on_progress = 1;
     change_progress();
@@ -50,6 +64,17 @@ function load_video(video_name, hour, minute, second) {
   var currentTime =  hour * 3600 + minute * 60 + second;
   main_video.addEventListener("loadedmetadata", function() {
     main_video.currentTime = currentTime;
+
+    // 调整播放速度
+    var total_x = parseFloat($("#total_speed").css("width"));
+    var cur_x = parseFloat($("#cur_speed").css("width"));
+    var percent = cur_x / total_x;
+    main_video.playbackRate = 2 * percent + 1;
+    // 将按键变成pause
+    if (pause_button.children[0].innerText == "play") {
+      pause_button.children[0].innerText = "pause";
+    }
+
     main_video.addEventListener("loadedmetadata", function() {
       // do nothing
     });
@@ -59,7 +84,6 @@ function load_video(video_name, hour, minute, second) {
 }
 
 function switch_video() {
-  var switch_button = document.getElementById("switch_video");
   if (switch_button.children[0].innerText == "show") {
     $(main_video).css("display", "block");
     switch_button.children[0].innerText = "hide";
@@ -70,7 +94,6 @@ function switch_video() {
 }
 
 function pause_video() {
-  var pause_button = document.getElementById("pause_video");
   if (pause_button.children[0].innerText == "pause") {
     main_video.pause();
     pause_button.children[0].innerText = "play";
