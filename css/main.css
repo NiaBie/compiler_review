@@ -38,6 +38,10 @@
   cursor: pointer;
 }
 
+.main_article h1 {
+  cursor: pointer;
+}
+
 .menu_item {
   height: 50px;
   width: 100px;
